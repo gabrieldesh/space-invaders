@@ -1,4 +1,4 @@
-require './Cannon.rb'
+require_relative 'cannon'
 
 class GameWindow < Gosu::Window
     def initialize

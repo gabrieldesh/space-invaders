@@ -1,8 +1,11 @@
 require 'gosu'
 
 class Cannon
+
+  attr_reader :x, :y
+
     def initialize
-      @image = Gosu::Image.new("cannon.png")
+      @image = Gosu::Image.new("assets/cannon.png")
       @x = @z = @vel_x = @vel_y = @angle = 0.0
       @score = 0
     end

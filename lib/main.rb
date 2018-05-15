@@ -1,5 +1,5 @@
 require 'gosu'
-require './GameWindow.rb'
+require_relative "game_window"
 
 
 GameWindow.new.show
