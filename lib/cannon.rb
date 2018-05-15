@@ -7,8 +7,7 @@ class Cannon
   
   def initialize
     @image = Gosu::Image.new("assets/cannon.png")
-    @x = @z = @vel_x = @vel_y = @angle = 0.0
-    @score = 0
+    @x = @y = 0.0
   end
 
   def warp(x, y)
@@ -16,10 +15,10 @@ class Cannon
   end
 
   def move 
-    if Gosu.button_down? Gosu::KB_LEFT or Gosu::button_down? Gosu::GP_LEFT
+    if left_key_pressed?
       move_left
     end
-    if Gosu.button_down? Gosu::KB_RIGHT or Gosu::button_down? Gosu::GP_RIGHT
+    if right_key_pressed?
       move_right
     end
   end
@@ -29,6 +28,14 @@ class Cannon
   end
 
  private
+  def left_key_pressed?
+    Gosu.button_down? Gosu::KB_LEFT or Gosu::button_down? Gosu::GP_LEFT
+  end
+
+  def right_key_pressed?
+    Gosu.button_down? Gosu::KB_RIGHT or Gosu::button_down? Gosu::GP_RIGHT
+  end
+
   def move_left
       @x -= STEP_MOVEMENT
   end
