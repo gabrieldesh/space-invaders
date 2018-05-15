@@ -38,6 +38,6 @@ class Cannon
     end
   
     def draw
-      @image.draw(@x, @y, @z, scale_x = 0.5, scale_y = 0.5)
+      @image.draw(@x, @y, @z, scale_x = 3, scale_y = 3)
     end
   end

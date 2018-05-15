@@ -1,4 +1,5 @@
 require_relative 'cannon'
+require_relative 'alien'
 
 class GameWindow < Gosu::Window
     def initialize
@@ -7,8 +8,10 @@ class GameWindow < Gosu::Window
     
         # @background_image = Gosu::Image.new("media/space.png", :tileable => true)
     
+        @alien = Alien.new
         @player = Cannon.new
         @player.warp(400, 550)
+        @alien.warp 300, 500
       end
     
       def update
@@ -18,14 +21,11 @@ class GameWindow < Gosu::Window
         if Gosu.button_down? Gosu::KB_RIGHT or Gosu::button_down? Gosu::GP_RIGHT
           @player.move_right
         end
-        if Gosu.button_down? Gosu::KB_UP or Gosu::button_down? Gosu::GP_BUTTON_0
-          @player.accelerate
-        end
-        # @player.move
       end
     
       def draw
         @player.draw
+        @alien.draw
         # @background_image.draw(0, 0, 0)
       end
     
