@@ -3,7 +3,9 @@ require 'gosu'
 class Cannon
 
   attr_reader :x, :y
+
   STEP_MOVEMENT = 1.5
+  DRAW_SCALE = 3
   
   def initialize
     @image = Gosu::Image.new("assets/cannon.png")
@@ -23,8 +25,12 @@ class Cannon
     end
   end
 
+  def width
+    @image.width * DRAW_SCALE
+  end
+
   def draw
-    @image.draw(@x, @y, @z, scale_x = 3, scale_y = 3)
+    @image.draw(@x, @y, 0, scale_x = DRAW_SCALE, scale_y = DRAW_SCALE)
   end
 
  private
@@ -37,10 +43,14 @@ class Cannon
   end
 
   def move_left
+    if @x > 0
       @x -= STEP_MOVEMENT
+    end
   end
 
   def move_right
+    if @x < 800 - width
       @x += STEP_MOVEMENT
+    end
   end
 end

@@ -11,22 +11,50 @@ describe 'cannon' do
     end
 
     describe 'given movimentation commands' do
-        it 'when the button_down is KB_LEFT then x should decrement 1.5' do
-            allow(Gosu).to receive(:button_down?).and_return(false)
-            allow(Gosu).to receive(:button_down?).with(Gosu::KB_LEFT).and_return(true)
-            old_x_position = subject.x
-            
-            subject.move
-            expect(subject.x).to be == old_x_position - 1.5
-        end
+        before {allow(Gosu).to receive(:button_down?).and_return(false)}
+        before {@old_x_position = subject.x}
 
-        it 'when the button_down is KB_RIGHT then x should increment 1.5' do
-            allow(Gosu).to receive(:button_down?).and_return(false)
-            allow(Gosu).to receive(:button_down?).with(Gosu::KB_RIGHT).and_return(true)
-            old_x_position = subject.x
+        describe 'when the button_down' do
+            describe 'is KB_LEFT 'do
+                before {allow(Gosu).to receive(:button_down?).with(Gosu::KB_LEFT).and_return(true)}
+
+                it 'then x should decrement 1.5' do
+                    subject.warp 10, 0
+                    @old_x_position = subject.x
+
+                    subject.move
+                    
+                    expect(subject.x).to be == @old_x_position - 1.5
+                end
+
+                describe 'and the image reach left border' do
+                    it 'then shouldn\'t  decrement' do                        
+                        subject.move
+
+                        expect(subject.x).to be == @old_x_position
+                    end
+                end
+            end
             
-            subject.move
-            expect(subject.x).to be == old_x_position + 1.5
+            describe 'is KB_RIGHT' do 
+                before {allow(Gosu).to receive(:button_down?).with(Gosu::KB_RIGHT).and_return(true)}
+
+                it 'then x should increment 1.5' do    
+                    subject.move
+                    expect(subject.x).to be == @old_x_position + 1.5
+                end
+            
+                describe 'and the image reach right border' do
+                    it 'then shouldn\'t  increment' do
+                        subject.warp  800 - subject.width , 0
+                        @old_x_position = subject.x
+
+                        subject.move
+                        expect(subject.x).to be == @old_x_position
+                    end
+                end
+            end
+
         end
     end
 end
