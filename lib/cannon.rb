@@ -3,41 +3,37 @@ require 'gosu'
 class Cannon
 
   attr_reader :x, :y
-
-    def initialize
-      @image = Gosu::Image.new("assets/cannon.png")
-      @x = @z = @vel_x = @vel_y = @angle = 0.0
-      @score = 0
-    end
+  STEP_MOVEMENT = 1.5
   
-    def warp(x, y)
-      @x, @y = x, y
-    end
+  def initialize
+    @image = Gosu::Image.new("assets/cannon.png")
+    @x = @z = @vel_x = @vel_y = @angle = 0.0
+    @score = 0
+  end
 
-    def move_left
-        @x -= 1.5
-    end
+  def warp(x, y)
+    @x, @y = x, y
+  end
 
-    def move_right
-        @x += 1.5
+  def move 
+    if Gosu.button_down? Gosu::KB_LEFT or Gosu::button_down? Gosu::GP_LEFT
+      move_left
     end
-    
-    def accelerate
-      @vel_x += Gosu.offset_x(@angle, 0.5)
-      @vel_y += Gosu.offset_y(@angle, 0.5)
-    end
-    
-    def move
-      @x += @vel_x
-      @y += @vel_y
-      @x %= 640
-      @y %= 480
-      
-      @vel_x *= 0.95
-      @vel_y *= 0.95
-    end
-  
-    def draw
-      @image.draw(@x, @y, @z, scale_x = 3, scale_y = 3)
+    if Gosu.button_down? Gosu::KB_RIGHT or Gosu::button_down? Gosu::GP_RIGHT
+      move_right
     end
   end
+
+  def draw
+    @image.draw(@x, @y, @z, scale_x = 3, scale_y = 3)
+  end
+
+ private
+  def move_left
+      @x -= STEP_MOVEMENT
+  end
+
+  def move_right
+      @x += STEP_MOVEMENT
+  end
+end

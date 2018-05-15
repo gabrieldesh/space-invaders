@@ -10,25 +10,24 @@ class GameWindow < Gosu::Window
     
         @alien = Alien.new
         @player = Cannon.new
-        @player.warp(400, 550)
+        
+        @player.warp 400, 550
         @alien.warp 300, 500
       end
     
+      #This method is called once every #update_interval milliseconds while the window is being shown. Your application's main logic should go here.
       def update
-        if Gosu.button_down? Gosu::KB_LEFT or Gosu::button_down? Gosu::GP_LEFT
-          @player.move_left
-        end
-        if Gosu.button_down? Gosu::KB_RIGHT or Gosu::button_down? Gosu::GP_RIGHT
-          @player.move_right
-        end
+        @player.move
       end
     
+      #This method is called after every update and whenever the OS wants the window to repaint itself.
       def draw
         @player.draw
         @alien.draw
         # @background_image.draw(0, 0, 0)
       end
     
+      #This method is called before #update if a button is pressed while the window has focus.
       def button_down(id)
         if id == Gosu::KB_ESCAPE
           close
