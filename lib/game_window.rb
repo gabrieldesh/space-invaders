@@ -9,9 +9,8 @@ class GameWindow < Gosu::Window
         # @background_image = Gosu::Image.new("media/space.png", :tileable => true)
     
         @alien = Alien.new
-        @player = Cannon.new
+        @player = Cannon.new self
         
-        @player.warp 400, 550
         @alien.warp 300, 500
       end
     
@@ -24,7 +23,6 @@ class GameWindow < Gosu::Window
       def draw
         @player.draw
         @alien.draw
-        # @background_image.draw(0, 0, 0)
       end
     
       #This method is called before #update if a button is pressed while the window has focus.

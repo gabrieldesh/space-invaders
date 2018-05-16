@@ -2,18 +2,18 @@ require 'gosu'
 
 class Cannon
 
-  attr_reader :x, :y
+  attr_accessor :x
+  attr_reader :y
 
-  STEP_MOVEMENT = 1.5
+  STEP_MOVEMENT = 5
   DRAW_SCALE = 3
+  MARGIN_BOTTOM = 50
   
-  def initialize
+  def initialize(window)
+    @window = window
     @image = Gosu::Image.new("assets/cannon.png")
-    @x = @y = 0.0
-  end
-
-  def warp(x, y)
-    @x, @y = x, y
+    @x = window.width / 2 - width / 2
+    @y = window.height - MARGIN_BOTTOM
   end
 
   def move 
@@ -49,7 +49,7 @@ class Cannon
   end
 
   def move_right
-    if @x < 800 - width
+    if @x < @window.width - width
       @x += STEP_MOVEMENT
     end
   end

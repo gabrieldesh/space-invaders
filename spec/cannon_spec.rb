@@ -1,12 +1,14 @@
 require 'cannon'
 describe 'cannon' do
-    subject { Cannon.new }
+    let(:window) { Gosu::Window.new 800, 600 }
+    subject { Cannon.new window }
+
 
     describe 'given initialization' do
 
-        it 'when initialize then the position should be x=0 and y=0' do
-            expect(subject.x).to be == 0.0
-            expect(subject.y).to be == 0.0
+        it 'then the position should be x=0 and y=0' do
+            expect(subject.x).to be == window.width / 2 - subject.width / 2
+            expect(subject.y).to be == window.height - 50
         end
     end
 
@@ -19,16 +21,19 @@ describe 'cannon' do
                 before {allow(Gosu).to receive(:button_down?).with(Gosu::KB_LEFT).and_return(true)}
 
                 it 'then x should decrement 1.5' do
-                    subject.warp 10, 0
+                    
                     @old_x_position = subject.x
 
                     subject.move
                     
-                    expect(subject.x).to be == @old_x_position - 1.5
+                    expect(subject.x).to be == @old_x_position - 5
                 end
 
                 describe 'and the image reach left border' do
                     it 'then shouldn\'t  decrement' do                        
+                        subject.x = 0
+                        @old_x_position = subject.x
+
                         subject.move
 
                         expect(subject.x).to be == @old_x_position
@@ -41,15 +46,16 @@ describe 'cannon' do
 
                 it 'then x should increment 1.5' do    
                     subject.move
-                    expect(subject.x).to be == @old_x_position + 1.5
+                    expect(subject.x).to be == @old_x_position + 5
                 end
             
                 describe 'and the image reach right border' do
                     it 'then shouldn\'t  increment' do
-                        subject.warp  800 - subject.width , 0
+                        subject.x = window.width - subject.width
                         @old_x_position = subject.x
 
                         subject.move
+                        
                         expect(subject.x).to be == @old_x_position
                     end
                 end
