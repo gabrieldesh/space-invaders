@@ -1,4 +1,5 @@
 require 'cannon'
+
 describe 'cannon' do
     let(:window) { Gosu::Window.new 800, 600 }
     subject { Cannon.new window }

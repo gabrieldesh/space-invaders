@@ -11,6 +11,18 @@ class Alien
       def warp(x, y)
         @x, @y = x, y
       end
+
+      def width
+        @image.width * 3
+      end
+
+      def height
+        @image.height * 3
+      end
+
+      def radius
+        20
+      end
       
       def update 
       end
