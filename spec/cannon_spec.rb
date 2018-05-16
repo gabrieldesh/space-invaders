@@ -24,7 +24,7 @@ describe 'cannon' do
                     
                     @old_x_position = subject.x
 
-                    subject.move
+                    subject.update
                     
                     expect(subject.x).to be == @old_x_position - 5
                 end
@@ -34,7 +34,7 @@ describe 'cannon' do
                         subject.x = 0
                         @old_x_position = subject.x
 
-                        subject.move
+                        subject.update
 
                         expect(subject.x).to be == @old_x_position
                     end
@@ -45,7 +45,7 @@ describe 'cannon' do
                 before {allow(Gosu).to receive(:button_down?).with(Gosu::KB_RIGHT).and_return(true)}
 
                 it 'then x should increment 1.5' do    
-                    subject.move
+                    subject.update
                     expect(subject.x).to be == @old_x_position + 5
                 end
             
@@ -54,7 +54,7 @@ describe 'cannon' do
                         subject.x = window.width - subject.width
                         @old_x_position = subject.x
 
-                        subject.move
+                        subject.update
                         
                         expect(subject.x).to be == @old_x_position
                     end

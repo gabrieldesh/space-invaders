@@ -12,6 +12,9 @@ class Alien
         @x, @y = x, y
       end
       
+      def update 
+      end
+
       def draw
         @image.draw(@x, @y, @z, scale_x = 3, scale_y = 3)
       end

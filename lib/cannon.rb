@@ -16,7 +16,7 @@ class Cannon
     @y = window.height - MARGIN_BOTTOM
   end
 
-  def move 
+  def update 
     if left_key_pressed?
       move_left
     end
