@@ -1,23 +1,11 @@
-class Alien
+require_relative 'image_component'
 
-    attr_reader :x, :y
+class Alien < ImageComponent
   
-      def initialize
-        @image = Gosu::Image.new("assets/alien.png")
-        @x = @z = @vel_x = @vel_y = @angle = 0.0
-        @score = 0
-      end
-    
-      def warp(x, y)
-        @x, @y = x, y
-      end
-
-      def width
-        @image.width * 3
-      end
-
-      def height
-        @image.height * 3
+      def initialize (window, x, y)
+        super window, x, y, "assets/alien.png"
+        @vel_x = @vel_y = @angle = 0.0
+        @remove = false
       end
 
       def radius
@@ -25,9 +13,5 @@ class Alien
       end
       
       def update 
-      end
-
-      def draw
-        @image.draw(@x, @y, @z, scale_x = 3, scale_y = 3)
       end
     end

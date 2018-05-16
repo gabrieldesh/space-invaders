@@ -7,10 +7,9 @@ class GameWindow < Gosu::Window
         super 800, 600
         self.caption = "Space Invaders"
     
-        @alien = Alien.new
+        @alien = Alien.new self, 300, 300
         @player = Cannon.new self
         
-        @alien.warp 300, 300
         @elements = [@alien, @player]
         @shots = []
     end
@@ -18,17 +17,13 @@ class GameWindow < Gosu::Window
     #This method is called once every #update_interval milliseconds while the window is being shown. Your application's main logic should go here.
     def update
       for item in @elements
-        item.update
+        if item.remove?
+          @elements.delete(item)
+        end
       end
 
-      for shot in @shots
-        if shot.remove?
-          @shots.delete(shot)
-        elsif shot.collide?(@alien)
-          @shots.delete(shot)
-          @elements.delete(@alien)
-        end
-        shot.update
+      for item in @elements
+        item.update
       end
     end
   
@@ -37,9 +32,6 @@ class GameWindow < Gosu::Window
       for item in @elements
         item.draw 
       end
-      for shot in @shots
-        shot.draw
-      end
     end
   
     #This method is called before #update if a button is pressed while the window has focus.
@@ -47,7 +39,7 @@ class GameWindow < Gosu::Window
       if id == Gosu::KB_ESCAPE
         close
       elsif id == Gosu::KB_SPACE
-        @shots << Shot.new(self, @player.x + @player.width / 2, @player.y)
+        @elements << Shot.new(self, @player.x + @player.width / 2, @player.y, @alien)
       else
         super
       end

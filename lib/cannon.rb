@@ -1,17 +1,15 @@
 require 'gosu'
+require_relative 'image_component'
 
-class Cannon
+class Cannon < ImageComponent
 
   attr_accessor :x
-  attr_reader :y
 
   STEP_MOVEMENT = 5
-  DRAW_SCALE = 3
   MARGIN_BOTTOM = 50
   
   def initialize(window)
-    @window = window
-    @image = Gosu::Image.new("assets/cannon.png")
+    super window, "assets/cannon.png"
     @x = window.width / 2 - width / 2
     @y = window.height - MARGIN_BOTTOM
   end
@@ -23,14 +21,6 @@ class Cannon
     if right_key_pressed?
       move_right
     end
-  end
-
-  def width
-    @image.width * DRAW_SCALE
-  end
-
-  def draw
-    @image.draw(@x, @y, 0, scale_x = DRAW_SCALE, scale_y = DRAW_SCALE)
   end
 
  private

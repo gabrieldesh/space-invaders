@@ -1,8 +1,10 @@
-class Shot
-    def initialize(window, x, y, color1 = 0xffd936f1, color2 = 0xff000000)
-        @window = window
-        @x = x
-        @y = y
+require_relative 'base_component'
+
+class Shot < BaseComponent
+
+    def initialize(window, x, y, color1 = 0xffd936f1, color2 = 0xff000000, alien)
+        super window, x, y
+        @alien = alien
         @width = 2  # this is actually 1/2 of width
         @height = 20
         @speed = 10.0
@@ -15,13 +17,16 @@ class Shot
     end
 
     def update
+        if collide?(@alien)
+            @remove = true
+            @alien.remove = true
+        end
+
         if  @y > 0.0
             @y -= @speed
+        else 
+            @remove = true
         end
-    end
-
-    def remove?
-        @y <= 0
     end
       
     def draw    
@@ -30,10 +35,5 @@ class Shot
                           @x - @width, @y + @height, @color2, 
                           @x + @width, @y + @height, @color2, 
                           2)
-    
-    end
-
-    def collide?(thing)
-        (Gosu::distance(@x , @y, thing.x + thing.width / 2, thing.y + thing.height / 2 ) < thing.radius) 
     end
 end
