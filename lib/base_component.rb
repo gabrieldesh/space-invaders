@@ -16,7 +16,6 @@ class BaseComponent
     def warp(x, y)
         @x, @y = x, y
     end
-
     
     def remove?
         @remove

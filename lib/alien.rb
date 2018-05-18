@@ -13,5 +13,6 @@ class Alien < ImageComponent
       end
       
       def update 
+        @x += 1
       end
     end

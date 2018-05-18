@@ -1,5 +1,6 @@
 require_relative 'cannon'
 require_relative 'alien'
+require_relative 'alien_squad'
 require_relative 'shot'
 
 class GameWindow < Gosu::Window
@@ -7,10 +8,11 @@ class GameWindow < Gosu::Window
         super 800, 600
         self.caption = "Space Invaders"
     
+        @aliens = AlienSquad.new self
         @alien = Alien.new self, 300, 300
         @player = Cannon.new self
         
-        @elements = [@alien, @player]
+        @elements = [@alien, @player, @aliens]
         @shots = []
     end
     
@@ -26,7 +28,7 @@ class GameWindow < Gosu::Window
         item.update
       end
     end
-  
+
     #This method is called after every update and whenever the OS wants the window to repaint itself.
     def draw
       for item in @elements
