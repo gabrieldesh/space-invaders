@@ -28,8 +28,4 @@ class BaseComponent
     def draw
        raise NotImplementedError
     end
-
-    def collide?(thing)
-        (Gosu::distance(@x , @y, thing.x + thing.width / 2, thing.y + thing.height / 2 ) < thing.radius) 
-    end
 end

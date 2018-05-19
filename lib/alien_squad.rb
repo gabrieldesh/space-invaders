@@ -11,6 +11,8 @@ class AlienSquad < BaseComponent
     X_SPEED = 1
     Y_SPEED = 10
 
+    attr_reader :aliens
+
     def initialize (window)
         super window, 0, 100
 
@@ -38,6 +40,8 @@ class AlienSquad < BaseComponent
     end
 
     def update
+        check_remove
+
         case @moving_direction
         when :right
           if @x < @window.width - width
@@ -57,6 +61,7 @@ class AlienSquad < BaseComponent
     end
 
     private
+
     def create_aliens
         for line in 0..NUMBER_OF_LINES
             for column in 0..NUMBER_OF_COL
@@ -71,6 +76,14 @@ class AlienSquad < BaseComponent
 
     def first_alien_height
         @aliens[0].height
+    end
+
+    def check_remove
+        for alien in @aliens
+            if alien.remove?
+              @aliens.delete(alien)
+            end
+        end
     end
 
     def move_left
