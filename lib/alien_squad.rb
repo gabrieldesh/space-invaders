@@ -20,22 +20,21 @@ class AlienSquad < BaseComponent
         @moving_direction = :right
         
         create_aliens
-
-        @alien_width  = first_alien_width
-        @alien_height = first_alien_height
     end
 
     def width
-        HORIZONTAL_DISTANCE * NUMBER_OF_COL + @alien_width
+        @aliens.sort_by { |a| a.x }.reverse!
+        first_alien().width + first_alien().x
     end
     
     def height
-        VERTICAL_DISTANCE * NUMBER_OF_LINES + @alien_height
+        @aliens.sort_by { |a| a.y }.reverse!
+        first_alien().height + first_alien().y
     end
     
     def draw 
         for alien in @aliens
-                alien.draw
+            alien.draw
         end
     end
 
@@ -44,14 +43,14 @@ class AlienSquad < BaseComponent
 
         case @moving_direction
         when :right
-          if @x < @window.width - width
+          if border_right < @window.width - first_alien().width
             move_right
           else
             move_down
             @moving_direction = :left
           end
         when :left
-          if @x > 0
+          if border_left > 0
             move_left
           else
             move_down
@@ -70,12 +69,12 @@ class AlienSquad < BaseComponent
         end
     end
     
-    def first_alien_width
-        @aliens[0].width
+    def border_left
+        @aliens.min_by { |a| a.x }.x
     end
 
-    def first_alien_height
-        @aliens[0].height
+    def border_right
+        @aliens.max_by { |a| a.x }.x
     end
 
     def check_remove
@@ -87,7 +86,7 @@ class AlienSquad < BaseComponent
     end
 
     def move_left
-        for alien in @aliens
+    for alien in @aliens
             alien.move_left X_SPEED
         end
         @x -= X_SPEED
