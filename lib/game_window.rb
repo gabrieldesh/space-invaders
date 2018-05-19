@@ -9,10 +9,9 @@ class GameWindow < Gosu::Window
         self.caption = "Space Invaders"
     
         @aliens = AlienSquad.new self
-        @alien = Alien.new self, 300, 300
         @player = Cannon.new self
         
-        @elements = [@alien, @player, @aliens]
+        @elements = [@player, @aliens]
         @shots = []
     end
     
@@ -41,7 +40,7 @@ class GameWindow < Gosu::Window
       if id == Gosu::KB_ESCAPE
         close
       elsif id == Gosu::KB_SPACE
-        @elements << Shot.new(self, @player.x + @player.width / 2, @player.y, @alien)
+        @elements << Shot.new(self, @player.x + @player.width / 2, @player.y)
       else
         super
       end

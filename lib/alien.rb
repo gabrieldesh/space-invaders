@@ -12,6 +12,18 @@ class Alien < ImageComponent
         20
       end
       
+      def move_right displacement
+        @x += displacement
+      end
+      
+      def move_left displacement
+        @x -= displacement
+      end
+      
+      def move_down displacement
+        @y += displacement
+      end
+      
       def update 
         @x += 1
       end

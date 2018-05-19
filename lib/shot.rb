@@ -2,9 +2,8 @@ require_relative 'base_component'
 
 class Shot < BaseComponent
 
-    def initialize(window, x, y, color1 = 0xffd936f1, color2 = 0xff000000, alien)
+    def initialize(window, x, y, color1 = 0xffd936f1, color2 = 0xff000000)
         super window, x, y
-        @alien = alien
         @width = 2  # this is actually 1/2 of width
         @height = 20
         @speed = 10.0
@@ -17,11 +16,6 @@ class Shot < BaseComponent
     end
 
     def update
-        if collide?(@alien)
-            @remove = true
-            @alien.remove = true
-        end
-
         if  @y > 0.0
             @y -= @speed
         else 
