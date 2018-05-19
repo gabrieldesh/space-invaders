@@ -1,28 +1,26 @@
 require_relative 'alien'
+require_relative 'base_component'
 
-class AlienSquad
+class AlienSquad < BaseComponent
 
     NUMBER_OF_LINES = 5
     NUMBER_OF_COL = 7
     VERTICAL_DISTANCE = 50
     HORIZONTAL_DISTANCE = 40
 
+    X_SPEED = 1
+    Y_SPEED = 10
+
     def initialize (window)
-        @window = window
+        super window, 0, 100
+
         @aliens = []
-        @x = 0
-        @y = 100
         @moving_direction = :right
         
-       for line in 0..NUMBER_OF_LINES
-            @linha = []
-            for column in 0..NUMBER_OF_COL
-                @linha << Alien.new(window, @x + HORIZONTAL_DISTANCE * column, @y + VERTICAL_DISTANCE * line)
-            end 
-            @aliens << @linha  
-        end
-        @alien_width  = @aliens[0][0].width
-        @alien_height = @aliens[0][0].height
+        create_aliens
+
+        @alien_width  = first_alien_width
+        @alien_height = first_alien_height
     end
 
     def width
@@ -33,37 +31,9 @@ class AlienSquad
         VERTICAL_DISTANCE * NUMBER_OF_LINES + @alien_height
     end
     
-    def move_left
-      for line in @aliens
-          for alien in line
-              alien.move_left 1
-          end
-      end
-      @x -= 1
-    end
-    
-    def move_right
-      for line in @aliens
-          for alien in line
-              alien.move_right 1
-          end
-      end
-      @x += 1
-    end
-    
-    def move_down
-      for line in @aliens
-          for alien in line
-              alien.move_down 10
-          end
-      end
-    end
-
     def draw 
-        for line in @aliens
-            for alien in line
+        for alien in @aliens
                 alien.draw
-            end
         end
     end
 
@@ -86,6 +56,41 @@ class AlienSquad
         end
     end
 
-    def remove?
+    private
+    def create_aliens
+        for line in 0..NUMBER_OF_LINES
+            for column in 0..NUMBER_OF_COL
+                @aliens << Alien.new(@window, @x + HORIZONTAL_DISTANCE * column, @y + VERTICAL_DISTANCE * line)
+            end  
+        end
+    end
+    
+    def first_alien_width
+        @aliens[0].width
+    end
+
+    def first_alien_height
+        @aliens[0].height
+    end
+
+    def move_left
+        for alien in @aliens
+            alien.move_left X_SPEED
+        end
+        @x -= X_SPEED
+    end
+      
+    def move_right
+        for alien in @aliens
+            alien.move_right X_SPEED
+        end
+        @x += X_SPEED
+    end
+      
+    def move_down
+        for alien in @aliens
+            alien.move_down Y_SPEED
+        end
+        @y += Y_SPEED
     end
 end
