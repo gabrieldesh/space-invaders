@@ -89,7 +89,7 @@ class GameWindow < Gosu::Window
 
   def create_alien_shot_if_needed
     @alien_shot_period += 1
-    if @alien_shot_period == 20
+    if @alien_shot_period == 20 and @alien_squad.number_of_aliens > 0
       @alien_shots << Shot.new(self, @alien_squad.get_random_alien(), :down)
       @alien_shot_period = 0
     end
