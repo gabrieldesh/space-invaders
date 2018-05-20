@@ -2,9 +2,13 @@ require_relative 'base_component'
 
 class ImageComponent < BaseComponent
     
-    def initialize (window, x = 0, y = 0, image_path)
+    def initialize window, x = 0, y = 0, image_path
         @image = Gosu::Image.new(image_path)
         super window, x, y
+    end
+
+    def radius
+        20
     end
 
     def height

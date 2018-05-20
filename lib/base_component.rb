@@ -12,10 +12,6 @@ class BaseComponent
         @y = y
         @remove = false
     end
-
-    def warp(x, y)
-        @x, @y = x, y
-    end
     
     def remove?
         @remove
@@ -23,7 +19,7 @@ class BaseComponent
     
     def update
         raise NotImplementedError
-     end
+    end
 
     def draw
        raise NotImplementedError

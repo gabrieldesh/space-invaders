@@ -6,7 +6,7 @@ class Cannon < ImageComponent
   attr_accessor :x
 
   STEP_MOVEMENT = 5
-  MARGIN_BOTTOM = 50
+  MARGIN_BOTTOM = 100
   
   def initialize(window)
     super window, "assets/cannon.png"

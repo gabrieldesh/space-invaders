@@ -3,6 +3,7 @@ require_relative 'alien'
 require_relative 'alien_squad'
 require_relative 'shot'
 require_relative 'collision'
+require_relative 'lives_manager'
 
 class GameWindow < Gosu::Window
   def initialize
@@ -11,15 +12,21 @@ class GameWindow < Gosu::Window
 
       @alien_squad = AlienSquad.new self
       @player = Cannon.new self
+      @lives_manager = LivesManager.new self
 
       @shots = Array.new
       @alien_shots = Array.new
 
       @alien_shot_period = 0
 
-      @collision_manager = Collision.new @alien_squad.aliens, @shots
+      @collision_manager = Collision.new(
+          aliens: @alien_squad.aliens,
+          player_shots: @shots,
+          cannon: @player,
+          lives_manager: @lives_manager,
+          alien_shots: @alien_shots)
 
-      @elements = [@player, @alien_squad]
+      @elements = [@player, @alien_squad, @lives_manager]
   end
     
     #This method is called once every #update_interval milliseconds while the window is being shown. Your application's main logic should go here.

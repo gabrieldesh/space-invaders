@@ -8,10 +8,6 @@ class Alien < ImageComponent
     @remove = false
   end
 
-  def radius
-    20
-  end
-
   def move_right displacement
     @x += displacement
   end
