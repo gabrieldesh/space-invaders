@@ -13,7 +13,7 @@ class AlienSquad < BaseComponent
 
     attr_reader :aliens
 
-    def initialize (window)
+    def initialize window
         super window, 0, 100
 
         @aliens = []
@@ -32,21 +32,25 @@ class AlienSquad < BaseComponent
         check_remove
 
         case @moving_direction
-        when :right
-          if border_right < @window.width - @aliens[0].width
-            move_right
-          else
-            move_down
-            @moving_direction = :left
-          end
-        when :left
-          if border_left > 0
-            move_left
-          else
-            move_down
-            @moving_direction = :right
-          end
+            when :right
+                if border_right < @window.width - @aliens[0].width
+                    move_right
+                else
+                    move_down
+                    @moving_direction = :left
+                end
+            when :left
+                if border_left > 0
+                    move_left
+                else
+                    move_down
+                    @moving_direction = :right
+                end
         end
+    end
+
+    def get_random_alien
+        @aliens[rand(@aliens.length).to_i]
     end
 
     private
@@ -78,7 +82,7 @@ class AlienSquad < BaseComponent
     def move_left
     for alien in @aliens
             alien.move_left X_SPEED
-        end
+    end
         @x -= X_SPEED
     end
       
