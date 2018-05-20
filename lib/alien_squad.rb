@@ -21,16 +21,6 @@ class AlienSquad < BaseComponent
         
         create_aliens
     end
-
-    def width
-        @aliens.sort_by { |a| a.x }.reverse!
-        first_alien().width + first_alien().x
-    end
-    
-    def height
-        @aliens.sort_by { |a| a.y }.reverse!
-        first_alien().height + first_alien().y
-    end
     
     def draw 
         for alien in @aliens
@@ -43,7 +33,7 @@ class AlienSquad < BaseComponent
 
         case @moving_direction
         when :right
-          if border_right < @window.width - first_alien().width
+          if border_right < @window.width - @aliens[0].width
             move_right
           else
             move_down
