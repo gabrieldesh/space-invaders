@@ -6,6 +6,7 @@ class Collision
         @lives_manager = params[:lives_manager]
         @player_shots = params[:player_shots]
         @alien_shots = params[:alien_shots]
+        @game_status = params[:game_status]
     end
 
     def check
@@ -17,6 +18,7 @@ class Collision
         for alien in @aliens
             for shot in @player_shots
                 if shot.collide?(alien)
+                    @game_status.points += alien.points
                     @aliens.delete(alien)
                     @player_shots.delete(shot)
                 end

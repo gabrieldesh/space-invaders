@@ -6,15 +6,11 @@ class Shot < BaseComponent
         super window, image_component.x + image_component.width / 2, image_component.y
 
         @direction = direction
-        @width = 2  # this is actually 1/2 of width
+        @width = 2  
         @height = 20
         @speed = 10.0
-        # @snd_frequency = 0.15
-        # @snd_volume = 2.0
         @color1 = Gosu::Color.new(0xffd936f1)
         @color2 = Gosu::Color.new(0xff000000)
-        # @snd = self.class.load_sound(@window)
-        # @muted = false
     end
 
     def update

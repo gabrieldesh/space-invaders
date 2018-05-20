@@ -2,8 +2,11 @@ require_relative 'image_component'
 
 class Alien < ImageComponent
 
-  def initialize window, x, y
-    super window, x, y, "assets/alien.png"
+  attr_reader :points
+
+  def initialize window, x, y, points, path_image
+    super window, x, y, path_image
+    @points = points
   end
 
 end

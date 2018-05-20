@@ -3,7 +3,6 @@ require_relative 'base_component'
 
 class AlienSquad < BaseComponent
 
-    NUMBER_OF_LINES = 5
     NUMBER_OF_COL = 7
     VERTICAL_DISTANCE = 50
     HORIZONTAL_DISTANCE = 40
@@ -53,11 +52,12 @@ class AlienSquad < BaseComponent
 
     def create_aliens
         @aliens = []
-        for line in 0..NUMBER_OF_LINES
-            for column in 0..NUMBER_OF_COL
-                @aliens << Alien.new(@window, @x + HORIZONTAL_DISTANCE * column, @y + VERTICAL_DISTANCE * line)
-            end  
-        end
+        
+        NUMBER_OF_COL.times { |column| @aliens << Alien.new(@window, @x + 20 + HORIZONTAL_DISTANCE * column, @y + VERTICAL_DISTANCE + 30, 30, "assets/alien2.png") }
+        NUMBER_OF_COL.times { |column| @aliens << Alien.new(@window, @x + HORIZONTAL_DISTANCE * column, @y + VERTICAL_DISTANCE * 2, 20, "assets/alien3.png") }
+        NUMBER_OF_COL.times { |column| @aliens << Alien.new(@window, @x + HORIZONTAL_DISTANCE * column, @y + VERTICAL_DISTANCE * 3, 20, "assets/alien3.png") }
+        NUMBER_OF_COL.times { |column| @aliens << Alien.new(@window, @x + HORIZONTAL_DISTANCE * column, @y + VERTICAL_DISTANCE * 4, 10, "assets/alien.png") }
+        NUMBER_OF_COL.times { |column| @aliens << Alien.new(@window, @x + HORIZONTAL_DISTANCE * column, @y + VERTICAL_DISTANCE * 5, 10, "assets/alien.png") }
     end
     
     def border_left

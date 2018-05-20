@@ -4,12 +4,14 @@ require_relative 'alien_squad'
 require_relative 'shot'
 require_relative 'collision'
 require_relative 'lives_manager'
+require_relative 'game_status'
 
 class GameWindow < Gosu::Window
   def initialize
       super 800, 600
       self.caption = "Space Invaders"
 
+      @game_status = GameStatus.new self
       @alien_squad = AlienSquad.new self
       @player = Cannon.new self
       @lives_manager = LivesManager.new self
@@ -24,9 +26,10 @@ class GameWindow < Gosu::Window
           player_shots: @player_shots,
           cannon: @player,
           lives_manager: @lives_manager,
-          alien_shots: @alien_shots)
+          alien_shots: @alien_shots,
+          game_status: @game_status)
 
-      @elements = [@player, @alien_squad, @lives_manager]
+      @elements = [@player, @alien_squad, @lives_manager, @game_status]
       @update_list = [@elements, @player_shots, @alien_shots]
   end
     
