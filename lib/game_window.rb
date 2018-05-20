@@ -23,7 +23,7 @@ class GameWindow < Gosu::Window
       @alien_shot_period = 0
 
       @collision_manager = Collision.new(
-          aliens: @alien_squad.aliens,
+          aliens_squad: @alien_squad,
           player_shots: @player_shots,
           cannon: @player,
           lives_manager: @lives_manager,

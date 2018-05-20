@@ -18,7 +18,10 @@ class GameStatus
     end
 
     def update
-        if @lives_manager.number_of_lives == 0 || @aliens_squad.border_down >= @window.height - 100
+        if @aliens_squad.number_of_aliens == 0
+            @aliens_squad.new_level
+            @level += 1
+        elsif @lives_manager.number_of_lives == 0 || @aliens_squad.border_down >= @window.height - 100 
             @state = :end
         end
     end

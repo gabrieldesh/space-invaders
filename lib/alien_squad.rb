@@ -7,7 +7,7 @@ class AlienSquad < BaseComponent
     VERTICAL_DISTANCE = 50
     HORIZONTAL_DISTANCE = 40
 
-    X_SPEED = 1
+    
     Y_SPEED = 10
 
     attr_reader :aliens
@@ -15,7 +15,7 @@ class AlienSquad < BaseComponent
     def initialize window
         super window, 0, 0
         @moving_direction = :right
-        
+        @x_speed = 1
         create_aliens
     end
     
@@ -30,14 +30,14 @@ class AlienSquad < BaseComponent
             case @moving_direction
                 when :right
                     if border_right < @window.width - @aliens[0].width
-                        move :right, X_SPEED
+                        move :right, @x_speed
                     else
                         move :down, Y_SPEED
                         @moving_direction = :left
                     end
                 when :left
                     if border_left > 0
-                        move :left, X_SPEED
+                        move :left, @x_speed
                     else
                         move :down, Y_SPEED
                         @moving_direction = :right
@@ -51,11 +51,22 @@ class AlienSquad < BaseComponent
     end
 
     def border_down
-        @aliens.max_by { |a| a.y }.y
+        if number_of_aliens > 0
+            @aliens.max_by { |a| a.y }.y
+        end
+    end
+
+    def number_of_aliens
+        @aliens.length
+    end
+
+    def new_level
+        @x = @y = 0
+        @x_speed += 1
+        create_aliens
     end
 
     private
-
     def create_aliens
         @aliens = []
         
@@ -65,7 +76,7 @@ class AlienSquad < BaseComponent
         NUMBER_OF_COL.times { |column| @aliens << Alien.new(@window, @x + HORIZONTAL_DISTANCE * column, @y + VERTICAL_DISTANCE * 4, 10, "assets/alien.png") }
         NUMBER_OF_COL.times { |column| @aliens << Alien.new(@window, @x + HORIZONTAL_DISTANCE * column, @y + VERTICAL_DISTANCE * 5, 10, "assets/alien.png") }
     end
-    
+
     def border_left
         @aliens.min_by { |a| a.x }.x
     end

@@ -1,7 +1,7 @@
 class Collision
 
     def initialize params
-        @aliens = params[:aliens]
+        @aliens_squad = params[:aliens_squad]
         @cannon = params[:cannon]
         @lives_manager = params[:lives_manager]
         @player_shots = params[:player_shots]
@@ -15,11 +15,11 @@ class Collision
     end
 
     def check_player_shots
-        for alien in @aliens
+        for alien in @aliens_squad.aliens
             for shot in @player_shots
                 if shot.collide?(alien)
                     @game_status.points += alien.points
-                    @aliens.delete(alien)
+                    @aliens_squad.aliens.delete(alien)
                     @player_shots.delete(shot)
                 end
             end
