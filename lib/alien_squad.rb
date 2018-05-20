@@ -14,7 +14,7 @@ class AlienSquad < BaseComponent
     attr_reader :aliens
 
     def initialize window
-        super window, 0, 100
+        super window, 0, 0
         @moving_direction = :right
         
         create_aliens
