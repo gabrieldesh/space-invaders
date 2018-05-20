@@ -14,55 +14,37 @@ class GameWindow < Gosu::Window
       @player = Cannon.new self
       @lives_manager = LivesManager.new self
 
-      @shots = Array.new
+      @player_shots = Array.new
       @alien_shots = Array.new
 
       @alien_shot_period = 0
 
       @collision_manager = Collision.new(
           aliens: @alien_squad.aliens,
-          player_shots: @shots,
+          player_shots: @player_shots,
           cannon: @player,
           lives_manager: @lives_manager,
           alien_shots: @alien_shots)
 
       @elements = [@player, @alien_squad, @lives_manager]
+      @update_list = [@elements, @player_shots, @alien_shots]
   end
     
     #This method is called once every #update_interval milliseconds while the window is being shown. Your application's main logic should go here.
   def update
     @collision_manager.check
 
-    delete_if_needed @shots
-    delete_if_needed @alien_shots
-
-    @alien_shot_period += 1
-    if @alien_shot_period == 20
-      @alien_shots << Shot.new(self, @alien_squad.get_random_alien(), :down)
-      @alien_shot_period = 0
-    end
-
-    for item in @elements
-      item.update
-    end
-    for shot in @shots
-      shot.update
-    end
-    for alien_shot in @alien_shots
-      alien_shot.update
+    create_alien_shot_if_needed
+    
+    for item in @update_list
+      operate_over_items item, :update
     end
   end
 
     #This method is called after every update and whenever the OS wants the window to repaint itself.
   def draw
-    for item in @elements
-      item.draw
-    end
-    for shot in @shots
-      shot.draw
-    end
-    for shot in @alien_shots
-      shot.draw
+    for item in @update_list
+      operate_over_items item, :draw
     end
   end
   
@@ -71,18 +53,24 @@ class GameWindow < Gosu::Window
     if id == Gosu::KB_ESCAPE
       close
     elsif id == Gosu::KB_SPACE
-      @shots << Shot.new(self, @player, :up)
+      @player_shots << Shot.new(self, @player, :up)
     else
       super
     end
   end
 
   private
-  def delete_if_needed items
+  def create_alien_shot_if_needed
+    @alien_shot_period += 1
+    if @alien_shot_period == 20
+      @alien_shots << Shot.new(self, @alien_squad.get_random_alien(), :down)
+      @alien_shot_period = 0
+    end
+  end
+
+  def operate_over_items items, operation
     for item in items
-      if item.remove?
-        items.delete(item)
-      end
+      item.send(operation)
     end
   end
 end

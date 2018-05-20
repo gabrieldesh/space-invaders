@@ -15,8 +15,6 @@ class AlienSquad < BaseComponent
 
     def initialize window
         super window, 0, 100
-
-        @aliens = []
         @moving_direction = :right
         
         create_aliens
@@ -29,8 +27,6 @@ class AlienSquad < BaseComponent
     end
 
     def update
-        check_remove
-
         case @moving_direction
             when :right
                 if border_right < @window.width - @aliens[0].width
@@ -56,6 +52,7 @@ class AlienSquad < BaseComponent
     private
 
     def create_aliens
+        @aliens = []
         for line in 0..NUMBER_OF_LINES
             for column in 0..NUMBER_OF_COL
                 @aliens << Alien.new(@window, @x + HORIZONTAL_DISTANCE * column, @y + VERTICAL_DISTANCE * line)
@@ -71,18 +68,10 @@ class AlienSquad < BaseComponent
         @aliens.max_by { |a| a.x }.x
     end
 
-    def check_remove
-        for alien in @aliens
-            if alien.remove?
-              @aliens.delete(alien)
-            end
-        end
-    end
-
     def move_left
-    for alien in @aliens
-            alien.move_left X_SPEED
-    end
+        for alien in @aliens
+                alien.move_left X_SPEED
+        end
         @x -= X_SPEED
     end
       

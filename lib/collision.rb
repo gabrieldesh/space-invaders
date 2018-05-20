@@ -17,8 +17,8 @@ class Collision
         for alien in @aliens
             for shot in @player_shots
                 if shot.collide?(alien)
-                    shot.remove = true
-                    alien.remove = true
+                    @aliens.delete(alien)
+                    @player_shots.delete(shot)
                 end
             end
         end
