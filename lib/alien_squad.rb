@@ -26,21 +26,23 @@ class AlienSquad < BaseComponent
     end
 
     def update
-        case @moving_direction
-            when :right
-                if border_right < @window.width - @aliens[0].width
-                    move :right, X_SPEED
-                else
-                    move :down, Y_SPEED
-                    @moving_direction = :left
-                end
-            when :left
-                if border_left > 0
-                    move :left, X_SPEED
-                else
-                    move :down, Y_SPEED
-                    @moving_direction = :right
-                end
+        if @aliens.length > 0
+            case @moving_direction
+                when :right
+                    if border_right < @window.width - @aliens[0].width
+                        move :right, X_SPEED
+                    else
+                        move :down, Y_SPEED
+                        @moving_direction = :left
+                    end
+                when :left
+                    if border_left > 0
+                        move :left, X_SPEED
+                    else
+                        move :down, Y_SPEED
+                        @moving_direction = :right
+                    end
+            end
         end
     end
 

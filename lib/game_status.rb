@@ -5,6 +5,7 @@ class GameStatus
     attr_accessor :points, :level, :state
 
     def initialize window
+        @state = :introduction
         @points = 0
         @level = 1
         @x = 5
