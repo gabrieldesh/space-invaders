@@ -47,12 +47,18 @@ class AlienSquad < BaseComponent
     end
 
     def get_random_alien
-        @aliens[rand(@aliens.length).to_i]
+        if number_of_aliens > 0
+            @aliens[rand(@aliens.length).to_i]
+        else
+            raise "Aliens list is empty" 
+        end
     end
 
     def border_down
         if number_of_aliens > 0
             @aliens.max_by { |a| a.y }.y
+        else
+            raise "Aliens list is empty" 
         end
     end
 
