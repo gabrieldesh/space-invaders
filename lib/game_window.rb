@@ -12,9 +12,9 @@ class GameWindow < Gosu::Window
       super 800, 600
       self.caption = "Space Invaders"
 
-      @game_status = GameStatus.new self
       @lives_manager = LivesManager.new self
-      @introduction_message = FontComponent.new(self, 50, self.height / 2)
+      @game_status = GameStatus.new self, @lives_manager
+      @message = FontComponent.new(self, 50, self.height / 2)
   end
     
     #This method is called once every #update_interval milliseconds while the window is being shown. Your application's main logic should go here.
@@ -36,11 +36,13 @@ class GameWindow < Gosu::Window
       when :introduction
         @lives_manager.draw
         @game_status.draw 
-        @introduction_message.draw 'Press Space to Start!'
+        @message.draw 'Press Space to Start!'
       when :running
         for item in @update_list
           operate_over_items item, :draw
         end
+      when :end
+        @message.draw 'GAME OVER | Score: ' + @game_status.points.to_s
     end
   end
   
@@ -54,6 +56,8 @@ class GameWindow < Gosu::Window
       else
         game_start
       end
+    elsif @game_status.state == :end
+      close
     else
       super
     end

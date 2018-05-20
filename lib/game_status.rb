@@ -4,8 +4,9 @@ class GameStatus
 
     attr_accessor :points, :level, :state
 
-    def initialize window
+    def initialize window, lives_manager
         @state = :introduction
+        @lives_manager = lives_manager
         @points = 0
         @level = 1
         @x = 5
@@ -15,10 +16,13 @@ class GameStatus
     end
 
     def update
+        if @lives_manager.number_of_lives == 0
+            @state = :end
+        end
     end
 
     def draw
-        @points_component.draw('Points: ' + @points.to_s)
+        @points_component.draw('Score: ' + @points.to_s)
         @level_component.draw('Level: ' + @level.to_s)
     end
 end
