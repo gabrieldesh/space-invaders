@@ -50,6 +50,10 @@ class AlienSquad < BaseComponent
         @aliens[rand(@aliens.length).to_i]
     end
 
+    def border_down
+        @aliens.max_by { |a| a.y }.y
+    end
+
     private
 
     def create_aliens

@@ -4,9 +4,11 @@ class GameStatus
 
     attr_accessor :points, :level, :state
 
-    def initialize window, lives_manager
+    def initialize window, lives_manager, aliens_squad
+        @window = window
         @state = :introduction
         @lives_manager = lives_manager
+        @aliens_squad = aliens_squad
         @points = 0
         @level = 1
         @x = 5
@@ -16,7 +18,7 @@ class GameStatus
     end
 
     def update
-        if @lives_manager.number_of_lives == 0
+        if @lives_manager.number_of_lives == 0 || @aliens_squad.border_down >= @window.height - 100
             @state = :end
         end
     end

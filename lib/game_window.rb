@@ -13,7 +13,26 @@ class GameWindow < Gosu::Window
       self.caption = "Space Invaders"
 
       @lives_manager = LivesManager.new self
-      @game_status = GameStatus.new self, @lives_manager
+      @alien_squad = AlienSquad.new self
+      @game_status = GameStatus.new self, @lives_manager, @alien_squad
+      @player = Cannon.new self
+
+      @player_shots = Array.new
+      @alien_shots = Array.new
+
+      @alien_shot_period = 0
+
+      @collision_manager = Collision.new(
+          aliens: @alien_squad.aliens,
+          player_shots: @player_shots,
+          cannon: @player,
+          lives_manager: @lives_manager,
+          alien_shots: @alien_shots,
+          game_status: @game_status)
+
+      @elements = [@player, @alien_squad, @lives_manager, @game_status]
+      @update_list = [@elements, @player_shots, @alien_shots]
+
       @message = FontComponent.new(self, 50, self.height / 2)
   end
     
@@ -55,6 +74,7 @@ class GameWindow < Gosu::Window
         @player_shots << Shot.new(self, @player, :up)
       else
         game_start
+        @game_status.state = :running
       end
     elsif @game_status.state == :end
       close
@@ -65,26 +85,6 @@ class GameWindow < Gosu::Window
 
   private
   def game_start
-    @alien_squad = AlienSquad.new self
-    @player = Cannon.new self
-
-    @player_shots = Array.new
-    @alien_shots = Array.new
-
-    @alien_shot_period = 0
-
-    @collision_manager = Collision.new(
-        aliens: @alien_squad.aliens,
-        player_shots: @player_shots,
-        cannon: @player,
-        lives_manager: @lives_manager,
-        alien_shots: @alien_shots,
-        game_status: @game_status)
-
-    @elements = [@player, @alien_squad, @lives_manager, @game_status]
-    @update_list = [@elements, @player_shots, @alien_shots]
-
-    @game_status.state = :running
   end
 
   def create_alien_shot_if_needed
