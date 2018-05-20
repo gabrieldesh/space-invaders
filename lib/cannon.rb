@@ -34,13 +34,13 @@ class Cannon < ImageComponent
 
   def move_left
     if @x > 0
-      @x -= STEP_MOVEMENT
+      move :left, STEP_MOVEMENT
     end
   end
 
   def move_right
     if @x < @window.width - width
-      @x += STEP_MOVEMENT
+      move :right, STEP_MOVEMENT
     end
   end
 end

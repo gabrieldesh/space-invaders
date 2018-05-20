@@ -30,16 +30,16 @@ class AlienSquad < BaseComponent
         case @moving_direction
             when :right
                 if border_right < @window.width - @aliens[0].width
-                    move_right
+                    move :right, X_SPEED
                 else
-                    move_down
+                    move :down, Y_SPEED
                     @moving_direction = :left
                 end
             when :left
                 if border_left > 0
-                    move_left
+                    move :left, X_SPEED
                 else
-                    move_down
+                    move :down, Y_SPEED
                     @moving_direction = :right
                 end
         end
@@ -68,24 +68,11 @@ class AlienSquad < BaseComponent
         @aliens.max_by { |a| a.x }.x
     end
 
-    def move_left
+    def move direction, speed
         for alien in @aliens
-                alien.move_left X_SPEED
+            alien.move direction, speed
         end
-        @x -= X_SPEED
-    end
-      
-    def move_right
-        for alien in @aliens
-            alien.move_right X_SPEED
-        end
-        @x += X_SPEED
-    end
-      
-    def move_down
-        for alien in @aliens
-            alien.move_down Y_SPEED
-        end
-        @y += Y_SPEED
+
+        super direction, speed
     end
 end

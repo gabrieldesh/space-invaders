@@ -2,8 +2,6 @@ require_relative 'base_component'
 
 class Shot < BaseComponent
 
-    DIRECTIONS = { up: -1, down: 1 }
-
     def initialize window, image_component, direction
         super window, image_component.x + image_component.width / 2, image_component.y
 
