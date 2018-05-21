@@ -43,8 +43,10 @@ class GameWindow < Gosu::Window
 
       create_alien_shot_if_needed
       
-      for item in @update_list
-        operate_over_items item, :update
+      for item_list in @update_list
+        for item in item_list
+          item.update
+        end
       end
     end
   end
@@ -57,8 +59,10 @@ class GameWindow < Gosu::Window
         @game_status.draw 
         @message.draw 'Press Space to Start!'
       when :running
-        for item in @update_list
-          operate_over_items item, :draw
+        for item_list in @update_list
+          for item in item_list
+            item.draw
+          end
         end
       when :end
         @message.draw 'GAME OVER | Score: ' + @game_status.points.to_s
@@ -92,12 +96,6 @@ class GameWindow < Gosu::Window
     if @alien_shot_period == 20 and @alien_squad.number_of_aliens > 0
       @alien_shots << Shot.new(self, @alien_squad.get_random_alien(), :down)
       @alien_shot_period = 0
-    end
-  end
-
-  def operate_over_items items, operation
-    for item in items
-      item.send(operation)
     end
   end
 end
