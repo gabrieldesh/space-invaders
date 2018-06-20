@@ -3,7 +3,7 @@ require_relative 'base_component'
 module Shot
     include BaseComponent
 
-    def initialize(window, image_component, direction)
+    def new(window, image_component, direction)
         super window, image_component.x + image_component.width / 2, image_component.y
 
         @direction = direction
@@ -13,6 +13,7 @@ module Shot
         @color1 = Gosu::Color.new(0xffd936f1)
         @color2 = Gosu::Color.new(0xff000000)
     end
+    module_function :new
 
     def update
         if  @y > 0.0 || @y < @window.height

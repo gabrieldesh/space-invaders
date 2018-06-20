@@ -1,6 +1,6 @@
 module Collision
 
-    def initialize(params)
+    def new(params)
         @aliens_squad = params[:aliens_squad]
         @cannon = params[:cannon]
         @lives_manager = params[:lives_manager]
@@ -8,6 +8,7 @@ module Collision
         @alien_shots = params[:alien_shots]
         @game_status = params[:game_status]
     end
+    module_function :new
 
     def check
         check_alien_shots
