@@ -1,38 +1,37 @@
+require_relative 'state'
+
 module Collision
 
-    def new(params)
-        @aliens_squad = params[:aliens_squad]
-        @cannon = params[:cannon]
-        @lives_manager = params[:lives_manager]
-        @player_shots = params[:player_shots]
-        @alien_shots = params[:alien_shots]
-        @game_status = params[:game_status]
-    end
-    module_function :new
-
-    def check
-        check_alien_shots
-        check_player_shots
+    def check state
+        newState = check_alien_shots state
+        return check_player_shots newState
     end
 
-    def check_player_shots
-        for alien in @aliens_squad.aliens
-            for shot in @player_shots
+    def check_player_shots state
+        aliens = state.aliens_squad.aliens
+        shots  = state.player_shots
+
+        aliens.inject(state) { |state, alien|
+            shots.inject(state) { |state, shot|
                 if shot.collide?(alien)
-                    @game_status.points += alien.points
-                    @aliens_squad.aliens.delete(alien)
-                    @player_shots.delete(shot)
+                    state.increment_points(alien.points)
+                         .delete_alien(alien)
+                         .delete_player_shot(shot)
+                else
+                    state
                 end
-            end
-        end
+            }
+        }
     end
 
-    def check_alien_shots
-        for shot in @alien_shots
-            if shot.collide?(@cannon)
-                @alien_shots.delete(shot)
-                @lives_manager.remove_live
+    def check_alien_shots state
+        state.alien_shots.inject(state) { |state, shot|
+            if shot.collide?(state.cannon)
+                state.delete_alien_shot(shot)
+                     .remove_life
+            else
+                state
             end
-        end
+        }
     end
 end
