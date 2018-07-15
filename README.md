@@ -25,5 +25,9 @@ $ bundle install
 
 - Rode o jogo:
 ```
-$ ruby main.rb
+$ ruby object_oriented/main.rb
 ```
+
+## Observação
+
+A implementação presente no diretório `functional` não está completa e não funciona.
